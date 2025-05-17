@@ -6,7 +6,7 @@ dotenv.config();
 
 const app = express();
 
-app.get("/user", (req, res) =>{});
+app.get("/products", (req, res) =>{});
 
 console.log(process.env.MONGO_URI);
 
