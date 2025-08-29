@@ -32,9 +32,14 @@ const ProductCard = ({ product }) => {
 	const { deleteProduct, updateProduct } = useProductStore();
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	// Delete confirmation modal
+	const {isOpen: isDeleteOpen,onOpen: onDeleteOpen,onClose: onDeleteClose,} = useDisclosure();
+	
+
 
 	const handleDeleteProduct = async (pid) => {
 		const { success, message } = await deleteProduct(pid);
+		onDeleteClose(); // close modal after action
 		if (!success) {
 			toast({
 				title: "Error",
@@ -45,7 +50,7 @@ const ProductCard = ({ product }) => {
 			});
 		} else {
 			toast({
-				title: "Success",
+				title: "Deleted",
 				description: message,
 				status: "success",
 				duration: 3000,
@@ -98,11 +103,8 @@ const ProductCard = ({ product }) => {
 
 				<HStack spacing={2}>
 					<IconButton icon={<EditIcon />} onClick={onOpen} colorScheme='blue' />
-					<IconButton
-						icon={<DeleteIcon />}
-						onClick={() => handleDeleteProduct(product._id)}
-						colorScheme='red'
-					/>
+					<IconButton icon={<DeleteIcon />} onClick={onDeleteOpen} colorScheme="red" />
+
 				</HStack>
 			</Box>
 
@@ -137,6 +139,9 @@ const ProductCard = ({ product }) => {
 					</ModalBody>
 
 					<ModalFooter>
+						<Button variant='ghost' onClick={onClose}>
+							Cancel
+						</Button>
 						<Button
 							colorScheme='blue'
 							mr={3}
@@ -144,8 +149,25 @@ const ProductCard = ({ product }) => {
 						>
 							Update
 						</Button>
-						<Button variant='ghost' onClick={onClose}>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
+						<Modal isOpen={isDeleteOpen} onClose={onDeleteClose} isCentered>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>Confirm Delete</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<Text>
+							Are you sure you want to delete <b>{product.name}</b>? This action cannot be undone.
+						</Text>
+					</ModalBody>
+					<ModalFooter>
+						<Button variant="ghost" onClick={onDeleteClose}>
 							Cancel
+						</Button>
+						<Button colorScheme="red" mr={3} onClick={() => handleDeleteProduct(product._id)}>
+							Delete
 						</Button>
 					</ModalFooter>
 				</ModalContent>
