@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
 	const [updatedProduct, setUpdatedProduct] = useState(product);
 
 	const textColor = useColorModeValue("gray.600", "gray.200");
-	const bg = useColorModeValue("white", "gray.800");
+	const bg = useColorModeValue("white	", "gray.800");
 
 	const { deleteProduct, updateProduct } = useProductStore();
 	const toast = useToast();
@@ -87,8 +87,14 @@ const ProductCard = ({ product }) => {
 			rounded='lg'
 			overflow='hidden'
 			transition='all 0.3s'
-			_hover={{ transform: "translateY(-5px)", shadow: "xl" }}
+			_hover={{ transform: "translateY(-5px)", shadow: "dark-lg" }}
 			bg={bg}
+			w='full'
+			maxW='xs'
+			mx='auto'
+			my={1}
+			borderWidth='1px'
+			borderColor={useColorModeValue("gray.200", "gray.700")}
 		>
 			<Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
 
