@@ -15,7 +15,7 @@ const HomePage = () => {
 	return (
 		<Container maxW='container.xl' py={4} bg={"blackAlpha.10"} borderRadius={10} boxShadow={"lg"}>
 			<VStack spacing={8}>
-				<Text
+				{products.length >0 && (<Text
 					fontSize={"30"}
 					fontWeight={"bold"}
 					bgGradient={"linear(to-r, cyan.400, blue.500)"}
@@ -23,7 +23,7 @@ const HomePage = () => {
 					textAlign={"center"}
 				>
 					Products Available
-				</Text>
+				</Text>)}
 
 				<SimpleGrid
 					columns={{
